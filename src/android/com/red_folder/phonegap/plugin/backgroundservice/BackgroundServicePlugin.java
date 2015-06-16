@@ -1,17 +1,12 @@
 package com.red_folder.phonegap.plugin.backgroundservice;
 
+import android.util.Log;
 import org.apache.cordova.CallbackContext;
+import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 
-import android.util.Log;
-
-import org.apache.cordova.CordovaPlugin;
-
-import com.red_folder.phonegap.plugin.backgroundservice.BackgroundServicePluginLogic.ExecuteResult;
-import com.red_folder.phonegap.plugin.backgroundservice.BackgroundServicePluginLogic.ExecuteStatus;
-
-public class BackgroundServicePlugin extends CordovaPlugin implements BackgroundServicePluginLogic.IUpdateListener {
+public class BackgroundServicePlugin extends CordovaPlugin implements IUpdateListener {
 
 	/*
 	 ************************************************************************************************
@@ -38,20 +33,16 @@ public class BackgroundServicePlugin extends CordovaPlugin implements Background
 	//public boolean execute(String action, JSONArray data, CallbackContext callback) {
 	@Override
 	public boolean execute(final String action, final JSONArray data, final CallbackContext callback) {
-	
-	
 		boolean result = false;
-		
-		
+
 		if (this.mLogic == null)
 			this.mLogic = new BackgroundServicePluginLogic(this.cordova.getActivity());
 		
 		// Part fix for https://github.com/Red-Folder/Cordova-Plugin-BackgroundService/issues/19
 		//if (this.mLogic.isInitialized())
 		//	this.mLogic.initialize(this.cordova.getActivity());
-		
+
 		try {
-			
 			if (this.mLogic.isActionValid(action)) {
 				
 				//Part fix for https://github.com/Red-Folder/Cordova-Plugin-BackgroundService/issues/19
@@ -59,7 +50,7 @@ public class BackgroundServicePlugin extends CordovaPlugin implements Background
 				//final JSONArray finalData = data;
 				//final CallbackContext finalCallback = callback;
 
-				final BackgroundServicePluginLogic.IUpdateListener listener = this;
+				final IUpdateListener listener = this;
 				final Object[] listenerExtras = new Object[] { callback };
 			
 				cordova.getThreadPool().execute(new Runnable() {
@@ -88,7 +79,7 @@ public class BackgroundServicePlugin extends CordovaPlugin implements Background
 			}
 			
 		} catch (Exception ex) {
-			Log.d(TAG, "Exception - " + ex.getMessage());
+			Log.e(TAG, "Exception - " + ex.getMessage(), ex);
 		}
 
 		return result;
@@ -136,7 +127,7 @@ public class BackgroundServicePlugin extends CordovaPlugin implements Background
 				Log.d(TAG, "Sent update");
 			}
 		} catch (Exception ex) {
-			Log.d(TAG, "Sending update failed", ex);
+			Log.e(TAG, "Sending update failed", ex);
 		}
 	}
 	
@@ -157,25 +148,25 @@ public class BackgroundServicePlugin extends CordovaPlugin implements Background
 		}
 
 		if (logicResult.getStatus() == ExecuteStatus.ERROR) {
-			Log.d(TAG, "Status is ERROR");
+			Log.w(TAG, "Status is ERROR");
 			
 			if (logicResult.getData() == null) {
-				Log.d(TAG, "We dont have data");
+				Log.w(TAG, "We dont have data");
 				pluginResult = new PluginResult(PluginResult.Status.ERROR, "Unknown error");
 			} else {
-				Log.d(TAG, "We have data");
+				Log.w(TAG, "We have data");
 				pluginResult = new PluginResult(PluginResult.Status.ERROR, logicResult.getData());
 			}
 		}
 		
 		if (logicResult.getStatus() == ExecuteStatus.INVALID_ACTION) {
-			Log.d(TAG, "Status is INVALID_ACTION");
+			Log.w(TAG, "Status is INVALID_ACTION");
 			
 			if (logicResult.getData() == null) {
-				Log.d(TAG, "We have data");
+				Log.w(TAG, "We have data");
 				pluginResult = new PluginResult(PluginResult.Status.INVALID_ACTION, "Unknown error");
 			} else {
-				Log.d(TAG, "We dont have data");
+				Log.w(TAG, "We dont have data");
 				pluginResult = new PluginResult(PluginResult.Status.INVALID_ACTION, logicResult.getData());
 			}
 		}

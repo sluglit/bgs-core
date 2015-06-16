@@ -31,28 +31,31 @@
 
         <config-file target="AndroidManifest.xml" parent="/manifest">
             <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+            <uses-permission android:name="android.permission.READ_PHONE_STATE" />
         </config-file>
         
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
   
             <receiver android:name="com.red_folder.phonegap.plugin.backgroundservice.BootReceiver">
                 <intent-filter>     
-                    <action android:name="android.intent.action.BOOT_COMPLETED"></action>   
-                </intent-filter> 
+                    <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+                </intent-filter>
+                <intent-filter>
+                    <action android:name="android.intent.action.PHONE_STATE"></action>
+                </intent-filter>
             </receiver>
             
         </config-file>
-        
-		
-        <source-file src="src/com/red_folder/phonegap/plugin/backgroundservice/BackgroundService.java" target-dir="src/com/red_folder/phonegap/plugin/backgroundservice" />
-        <source-file src="src/com/red_folder/phonegap/plugin/backgroundservice/BackgroundServicePlugin.java" target-dir="src/com/red_folder/phonegap/plugin/backgroundservice" />
-        <source-file src="src/com/red_folder/phonegap/plugin/backgroundservice/BackgroundServicePluginLogic.java" target-dir="src/com/red_folder/phonegap/plugin/backgroundservice" />
-        <source-file src="src/com/red_folder/phonegap/plugin/backgroundservice/BootReceiver.java" target-dir="src/com/red_folder/phonegap/plugin/backgroundservice" />
-        <source-file src="src/com/red_folder/phonegap/plugin/backgroundservice/PropertyHelper.java" target-dir="src/com/red_folder/phonegap/plugin/backgroundservice" />
-        <source-file src="src/com/red_folder/phonegap/plugin/backgroundservice/ReflectionHelper.java" target-dir="src/com/red_folder/phonegap/plugin/backgroundservice" />
-		
-        <source-file src="aidl/android/BackgroundServiceApi.aidl" target-dir="src/com/red_folder/phonegap/plugin/backgroundservice" />
-        <source-file src="aidl/android/BackgroundServiceListener.aidl" target-dir="src/com/red_folder/phonegap/plugin/backgroundservice" />
+
+        <source-file src="src/android/com/red_folder/phonegap/plugin/backgroundservice/BackgroundService.java" target-dir="src/com/red_folder/phonegap/plugin/backgroundservice" />
+        <source-file src="src/android/com/red_folder/phonegap/plugin/backgroundservice/BackgroundServicePlugin.java" target-dir="src/com/red_folder/phonegap/plugin/backgroundservice" />
+        <source-file src="src/android/com/red_folder/phonegap/plugin/backgroundservice/BackgroundServicePluginLogic.java" target-dir="src/com/red_folder/phonegap/plugin/backgroundservice" />
+        <source-file src="src/android/com/red_folder/phonegap/plugin/backgroundservice/BootReceiver.java" target-dir="src/com/red_folder/phonegap/plugin/backgroundservice" />
+        <source-file src="src/android/com/red_folder/phonegap/plugin/backgroundservice/PropertyHelper.java" target-dir="src/com/red_folder/phonegap/plugin/backgroundservice" />
+        <source-file src="src/android/com/red_folder/phonegap/plugin/backgroundservice/ReflectionHelper.java" target-dir="src/com/red_folder/phonegap/plugin/backgroundservice" />
+
+        <source-file src="aidl/android/com/red_folder/phonegap/plugin/backgroundservice/BackgroundServiceApi.aidl" target-dir="src/com/red_folder/phonegap/plugin/backgroundservice" />
+        <source-file src="aidl/android/com/red_folder/phonegap/plugin/backgroundservice/BackgroundServiceListener.aidl" target-dir="src/com/red_folder/phonegap/plugin/backgroundservice" />
 		
     </platform>
 </plugin>
