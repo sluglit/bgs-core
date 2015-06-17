@@ -289,7 +289,6 @@ public abstract class BackgroundService extends Service {
                 Log.e(TAG, "Exception has occurred - " + ex.getMessage(), ex);
             }
         }
-
     }
 
     private void setupTimerTask() {
